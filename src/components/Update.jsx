@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Update = () => {
+  const [uname, setuname]= useState("")
+  const [uemail, setuemail] = useState("")
   return (
      <div className="d-flex w-100 vh-100 justify-content-center align-items-center">
-      <div className="w-50 border bg-secondary text-white p-5">
+      <div className="w-500 border bg-secondary text-white p-5">
         <h3>Modifier l'utilisateur</h3>
         <form action="">
           <div>
@@ -11,7 +13,8 @@ const Update = () => {
             <input
               type="text"
               name="name"
-              value={""}
+              value={uname}
+              onChange={(e)=> setuname(e.target.value)}
               placeholder="Entrez votre nom complet"
               className="form-control"
               required
@@ -22,7 +25,8 @@ const Update = () => {
             <input
               type="email"
               name="email"
-              value={""}
+              value={uemail}
+              onChange={(e)=> setuemail(e.target.value)}
               placeholder="Adresse Email"
               className="form-control"
               required
