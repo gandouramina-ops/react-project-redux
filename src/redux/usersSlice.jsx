@@ -5,6 +5,17 @@ export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
   const data = await response.json();
   return data;
 });
+export const addUsers = createAsyncThunk("users/addUsers", async (user) => {
+  const response = await fetch(baseUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  });
+  const data = await response.json();
+  return data;
+});
 const usersSlice = createSlice({
   name: "users",
   initialState: {
@@ -24,7 +35,7 @@ const usersSlice = createSlice({
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.status = "failed";
-        state.list = action.error.message;
+        state.list.push(action.payload);
       });
   }, //pour les act asynchrone (asynchthunk pour les api)
 });
