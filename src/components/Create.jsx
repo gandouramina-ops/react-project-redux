@@ -8,7 +8,8 @@ const Create = () => {
   const [email, setemail] = useState("");
   const Dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefaualt();
     Dispatch(addUsers({ name, email }));
     navigate("/");
   };

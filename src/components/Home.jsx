@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../redux/usersSlice";
+import { deleteUser, fetchUsers } from "../redux/usersSlice";
 
 const Home = () => {
   const { list: users, status, error } = useSelector((state) => state.users);
@@ -12,6 +12,11 @@ const Home = () => {
       dispatch(fetchUsers());
     }
   }, [status]);
+  if (status === "failed") {
+    return <div>erreur : {error}</div>;
+  }
+  const Dispatch = useDispatch();
+  const navigate = useNavigate();
 
   return (
     <div className="container">
@@ -36,15 +41,26 @@ const Home = () => {
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>
-                <Link to={`/edit/${user.id}`} className="btn btn-primary btn-sm">
+                <Link
+                  to={`/edit/${user.id}`}
+                  className="btn btn-primary btn-sm"
+                >
                   Modifier
                 </Link>
-                <button className="btn btn-danger btn-sm" onClick={""}>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => dispatch(deleteUser(user.id))}
+                >
                   Supprimer
                 </button>
               </td>
             </tr>
           ))}
+          {users.lenghth === 0 && (
+            <tr>
+              <td colSpan="4">Aucun Utilisateur trouvé.</td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
