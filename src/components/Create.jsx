@@ -6,11 +6,11 @@ import { useNavigate } from "react-router-dom";
 const Create = () => {
   const [name, setname] = useState("");
   const [email, setemail] = useState("");
-  const Dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefaualt();
-    Dispatch(addUsers({ name, email }));
+    dispatch(addUsers({ name, email }));
     navigate("/");
   };
   return (
